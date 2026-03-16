@@ -23,7 +23,7 @@ Then build it using this command:
 ```bash
 rm -rf build
 cmake -B build \
--DCMAKE_TOOLCHAIN_FILE=../toolchain-riscv64-baremetal.cmake \
+-DCMAKE_TOOLCHAIN_FILE=toolchain-riscv64-baremetal.cmake \
 -DBUILD_QUANTIZE=OFF
 cmake --build build -j
 ```

@@ -107,7 +107,7 @@ struct vit_params
     int32_t seed = -1;
     int32_t n_threads = std::min(4, (int32_t)std::thread::hardware_concurrency());
     int32_t topk = 5;
-    std::string model = "../ggml-model-q8_0.gguf";  // model path
+    std::string model = "../ggml-model-f32.gguf";  // model path
     std::string fname_inp = "../assets/cheetah.jpg"; // image path
     float eps = 1e-6f;                             // epsilon used in LN
 };
