@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
+enable_language(ASM)
 project(vit
         DESCRIPTION "Inference Vision Transformer (ViT) in plain C/C++ with ggml"
         HOMEPAGE_URL "https://github.com/staghado/vit.cpp")
@@ -14,8 +15,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Set the compiler flags, modify here if needed!
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=native")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g")
 
 
 # Additional flags for C++ (the ffast-math is to be used with caution!)
@@ -26,6 +27,25 @@ add_subdirectory(ggml)
 
 # vit executable
 add_executable(${PROJECT_NAME} main.cpp vit.cpp)
+target_link_options(${PROJECT_NAME} PRIVATE
+        -T${CMAKE_SOURCE_DIR}/link.ld
+)
+
+target_sources(${PROJECT_NAME} PUBLIC
+        crt.S
+        start.c
+        ccp_runtime.c
+        alloc_compat.c
+        sys_sbrk.c
+        uart.c
+        semihost-sys_fdtable.c
+        semihost-sys_open.c
+        semihost-sys_read.c
+        semihost-sys_close.c
+        semihost-sys_lseek.c
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE semihost/include)
 target_link_libraries(${PROJECT_NAME} PUBLIC ggml)
 target_include_directories(${PROJECT_NAME} PUBLIC .)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_11)
@@ -53,3 +73,7 @@ if(BUILD_BENCHMARK)
     target_include_directories(benchmark PUBLIC .)
     target_compile_features(benchmark PUBLIC cxx_std_17)
 endif()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+        MICRO_OS_PLUS_INCLUDE_SEMIHOSTING_SYSCALLS
+)

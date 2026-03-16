@@ -145,6 +145,10 @@ def process_and_write_variable(file, name, tensor, ftype):
         if ftype == 1 and tensor.ndim != 1 and name not in ["pos_embed", "cls_token"]
         else 0
     )
+    if name == "patch_embed.proj.weight":
+        ftype_cur = 1
+        print(f"forcing {name} to be F16")
+
     data = data.astype(np.float32) if ftype_cur == 0 else data.astype(np.float16)
 
     if name == "patch_embed.proj.bias":

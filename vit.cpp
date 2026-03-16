@@ -95,13 +95,11 @@ static void ggml_disconnect_node_from_graph(ggml_tensor *t)
 void ggml_graph_compute_helper(std::vector<uint8_t> &buf, ggml_cgraph *graph, int n_threads)
 {
     struct ggml_cplan plan = ggml_graph_plan(graph, n_threads);
-
     if (plan.work_size > 0)
     {
         buf.resize(plan.work_size);
         plan.work_data = buf.data();
     }
-
     ggml_graph_compute(graph, &plan);
 }
 
@@ -1021,6 +1019,7 @@ int vit_predict(const vit_model &model, vit_state &state, const image_f32 img1, 
     // recreate allocator with exact memory requirements
     state.buf_alloc_img_enc.resize(alloc_size);
     state.allocr = ggml_allocr_new(state.buf_alloc_img_enc.data(), state.buf_alloc_img_enc.size(), tensor_alignment);
+
 
     // compute the graph with the measured exact memory requirements from above
     ggml_allocr_reset(state.allocr);

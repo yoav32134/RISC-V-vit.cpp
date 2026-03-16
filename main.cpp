@@ -25,7 +25,12 @@
 // main function
 int main(int argc, char **argv)
 {
-    const int64_t t_main_start_us = ggml_time_us();
+    // volatile char *uart = (volatile char*)0x10000000;
+    // uart[0] = 'R';
+    // uart[0] = 'U';
+    // uart[0] = 'N';
+    // uart[0] = '\n';
+    const int64_t main_start_cycles = ggml_cycles();
 
     vit_params params;
 
@@ -36,23 +41,24 @@ int main(int argc, char **argv)
     vit_state state;
     std::vector<std::pair<float, int>> predictions;
 
-    int64_t t_load_us = 0;
+    int64_t t_load_cycles = 0;
 
-    if (vit_params_parse(argc, argv, params) == false)
-    {
-        return 1;
-    }
+    //if (vit_params_parse(argc, argv, params) == false)
+    //{
+    //    return 1;
+    //}
+    //
+    //if (params.seed < 0)
+    //{
+    //    params.seed = time(NULL);
+    //}
 
-    if (params.seed < 0)
-    {
-        params.seed = time(NULL);
-    }
     fprintf(stderr, "%s: seed = %d\n", __func__, params.seed);
     fprintf(stderr, "%s: n_threads = %d / %d\n", __func__, params.n_threads, (int32_t)std::thread::hardware_concurrency());
 
     // load the model
     {
-        const int64_t t_start_us = ggml_time_us();
+        const int64_t t_start_cycles = ggml_cycles();
 
         if (!vit_model_load(params.model.c_str(), model))
         {
@@ -60,7 +66,7 @@ int main(int argc, char **argv)
             return 1;
         }
 
-        t_load_us = ggml_time_us() - t_start_us;
+        t_load_cycles = ggml_cycles() - t_start_cycles;
     }
 
     // load the image
@@ -76,7 +82,6 @@ int main(int argc, char **argv)
     {
         fprintf(stderr, "processed, out dims : (%d x %d)\n", img1.nx, img1.ny);
     }
-
     // prepare for graph computation, memory allocation and results processing
     {
         static size_t buf_size = 3u * 1024 * 1024;
@@ -90,7 +95,7 @@ int main(int argc, char **argv)
         state.ctx = ggml_init(ggml_params);
         state.prediction = ggml_new_tensor_4d(state.ctx, GGML_TYPE_F32, model.hparams.num_classes, 1, 1, 1);
 
-        // printf("%s: Initialized context = %ld bytes\n", __func__, buf_size);
+        printf("%s: Initialized context = %ld bytes\n", __func__, buf_size);
     }
 
     {
@@ -100,11 +105,11 @@ int main(int argc, char **argv)
 
     // report timing
     {
-        const int64_t t_main_end_us = ggml_time_us();
+        const int64_t t_main_end_cycles = ggml_cycles();
         fprintf(stderr, "\n\n");
-        fprintf(stderr, "%s:    model load time = %8.2f ms\n", __func__, t_load_us / 1000.0f);
-        fprintf(stderr, "%s:    processing time = %8.2f ms\n", __func__, (t_main_end_us - t_main_start_us - t_load_us) / 1000.0f);
-        fprintf(stderr, "%s:    total time      = %8.2f ms\n", __func__, (t_main_end_us - t_main_start_us) / 1000.0f);
+        fprintf(stderr, "%s:    model load cycles = %" PRId64 " clock cycles\n", __func__, t_load_cycles );
+        fprintf(stderr, "%s:    processing cycles = %" PRId64" clock cycles\n", __func__, (t_main_end_cycles - main_start_cycles - t_load_cycles) );
+        fprintf(stderr, "%s:    total cycles      = %" PRId64" clock cycles\n", __func__, (t_main_end_cycles - main_start_cycles));
     }
 
     ggml_free(model.ctx);

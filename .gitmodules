@@ -1,3 +1,9 @@
 [submodule "ggml"]
 	path = ggml
 	url = https://github.com/ggerganov/ggml.git
+[submodule "xpacks/semihosting"]
+	path = xpacks/semihosting
+	url = https://github.com/micro-os-plus/semihosting-xpack.git
+[submodule "xpacks/architecture-riscv"]
+	path = xpacks/architecture-riscv
+	url = https://github.com/micro-os-plus/architecture-riscv-xpack.git
