@@ -23,12 +23,13 @@ Then build it using this command:
 ```bash
 rm -rf build
 cmake -B build \
--DCMAKE_TOOLCHAIN_FILE=toolchain-riscv64-baremetal.cmake \
--DBUILD_QUANTIZE=OFF
+  -DCMAKE_TOOLCHAIN_FILE=toolchain-riscv64-baremetal.cmake \
+  -DTOOLCHAIN_ROOT=/path/to/riscv \
+  -DBUILD_QUANTIZE=OFF
 cmake --build build -j
 ```
 
-Run it using this command:
+Run it using this command from the build directory:
 
 ```bash
 qemu-system-riscv64 \

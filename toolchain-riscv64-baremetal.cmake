@@ -1,7 +1,7 @@
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR riscv64)
 
-set(TOOLCHAIN_ROOT "/home/yoav/riscv-medany")
+set(TOOLCHAIN_ROOT "/home/yoav/riscv-medany" CACHE PATH "Path to the RISC-V toolchain")
 set(TARGET_TRIPLE "riscv64-unknown-elf")
 set(SYSROOT "${TOOLCHAIN_ROOT}/${TARGET_TRIPLE}")
 
