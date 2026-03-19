@@ -143,9 +143,12 @@ bool vit_image_preprocess_bilinear(const image_u8 &img, image_f32 &res, const vi
 
     const int nx3 = int(nx / x_scale + 0.5f);
     const int ny3 = int(ny / y_scale + 0.5f);
+    //
+    // const float m3[3] = {123.675f, 116.280f, 103.530f};
+    // const float s3[3] = {58.395f, 57.120f, 57.375f};
 
-    const float m3[3] = {123.675f, 116.280f, 103.530f};
-    const float s3[3] = {58.395f, 57.120f, 57.375f};
+    const float m3[3] = {127.5f, 127.5f, 127.5f};
+    const float s3[3] = {127.5f, 127.5f, 127.5f};
 
     // #pragma omp parallel for schedule(dynamic)
     for (int y = 0; y < ny3; y++)
