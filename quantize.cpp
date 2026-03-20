@@ -37,6 +37,9 @@ bool vit_model_quantize(const std::string &fname_inp, const std::string &fname_o
 
     switch (itype)
     {
+    case 1:
+        type = GGML_TYPE_Q2_K;
+        break;
     case 2:
         type = GGML_TYPE_Q4_0;
         break;
@@ -290,9 +293,11 @@ bool vit_model_quantize(const std::string &fname_inp, const std::string &fname_o
                     cur_size = ggml_quantize_q5_1(data_f32.data(), work.data(), nelements, ne[0], hist_cur.data());
                 }
                 break;
-                case GGML_TYPE_Q8_0:
-                {
+                case GGML_TYPE_Q8_0: {
                     cur_size = ggml_quantize_q8_0(data_f32.data(), work.data(), nelements, ne[0], hist_cur.data());
+                }
+                case GGML_TYPE_Q2_K: {
+                    cur_size = ggml_quantize_q2_K(data_f32.data(), work.data(), nelements, ne[0], hist_cur.data());
                 }
                 break;
                 default:
