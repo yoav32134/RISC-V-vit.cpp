@@ -10,6 +10,7 @@ Changes in this port:
 * Removed threading
 * Removed timer functionality
 * Added files required for startup in a bare-metal environment
+* Added option for one git quantization
 
 ---
 
@@ -46,3 +47,25 @@ WARNING: most of the stuff here was made with my paths, so it might break when y
 
 For any other instructions just follow the vit.cpp README.
 
+## QAT
+
+
+I added support for quantization-aware training (QAT) for the `q4_0` format.
+
+To recreate the results, first download the ImageNet-1K dataset from the Kaggle ImageNet Object Localization Challenge:
+
+https://www.kaggle.com/c/imagenet-object-localization-challenge
+
+Then run the following scripts:
+- `get_vals.py`
+- `train.py`
+
+## results for different quantization on vit_tiny
+| model    | acc@1 | acc@5 | cycle count x86 | model size MB | cycle count risc-v | comments             |
+|----------|-------|-------|-----------------|---------------|--------------------|----------------------|
+| F32      | 78.44 | 94.54 |                 | 22.9          |                    | Pytorch-image-models |
+| F32      | 78.19 | 94.41 | 297453          | 22.9          |                    |                      |
+| q8_0     | 78.18 | 94.41 | 260454          | 6.7           |                    |                      |
+| q4_1     | 75.93 | 93.53 | 272019          | 4.3           |                    |                      |
+| q4_0     | 75.67 | 93.18 | 276482          | 4             |                    |                      |
+| q4_0 QAT | 76.78 | 93.83 | 276482          | 4             |                    |                      |
