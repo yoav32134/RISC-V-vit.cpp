@@ -29,6 +29,7 @@ import sys
 import numpy as np
 import timm
 from timm.data import ImageNetInfo, infer_imagenet_subset
+import torch
 
 GGML_MAGIC = 0x67676d6c
 
@@ -43,6 +44,13 @@ def main():
         type=str,
         default="vit_base_patch8_224.augreg2_in21k_ft_in1k",
         help="timm model name",
+    )
+
+    parser.add_argument(
+        "--model_weight",
+        type=str,
+        default="",
+        help="the path for the weights of model(will use default timm mod if none provided)",
     )
     parser.add_argument(
         "--ftype",
@@ -75,6 +83,8 @@ def main():
 
     # Load the pretrained model
     timm_model = timm.create_model(args.model_name, pretrained=True)
+    if args.model_weight:
+        timm_model.load_state_dict(torch.load(args.model_weight))
 
     # Create id2label dictionary
     # if no labels added to config, use imagenet labeller in timm
@@ -145,10 +155,9 @@ def process_and_write_variable(file, name, tensor, ftype):
         if ftype == 1 and tensor.ndim != 1 and name not in ["pos_embed", "cls_token"]
         else 0
     )
-
-    #TODO: allow patch_embed.proj.weight be F32
     if name == "patch_embed.proj.weight":
         ftype_cur = 1
+        print(f"forcing {name} to be F16")
 
     data = data.astype(np.float32) if ftype_cur == 0 else data.astype(np.float16)
 
