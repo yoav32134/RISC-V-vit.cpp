@@ -1,0 +1,27 @@
+ggml/src/CMakeFiles/ggml.dir/ggml-quants.c.obj: \
+ /home/yoav/backups/RISC-V-vit.cpp/ggml/src/ggml-quants.c \
+ /home/yoav/backups/RISC-V-vit.cpp/ggml/src/ggml-quants.h \
+ /home/yoav/backups/RISC-V-vit.cpp/ggml/src/ggml-impl.h \
+ /home/yoav/backups/RISC-V-vit.cpp/ggml/src/../include/ggml/ggml.h \
+ /home/yoav/riscv-medany/lib/gcc/riscv64-unknown-elf/15.2.0/include/stdint.h \
+ /home/yoav/riscv-medany/lib/gcc/riscv64-unknown-elf/15.2.0/include/stdint-gcc.h \
+ /home/yoav/riscv-medany/lib/gcc/riscv64-unknown-elf/15.2.0/include/stddef.h \
+ /home/yoav/riscv-medany/lib/gcc/riscv64-unknown-elf/15.2.0/include/stdbool.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/assert.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/_ansi.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/newlib.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/_newlib_version.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/config.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/machine/ieeefp.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/features.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/string.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/reent.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/_ansi.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/cdefs.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/machine/_default_types.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/_types.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/machine/_types.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/lock.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/sys/string.h \
+ /home/yoav/riscv-medany/riscv64-unknown-elf/include/math.h \
+ /home/yoav/riscv-medany/lib/gcc/riscv64-unknown-elf/15.2.0/include/float.h

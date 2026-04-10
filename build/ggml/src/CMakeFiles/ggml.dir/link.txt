@@ -1,0 +1,2 @@
+/home/yoav/riscv-medany/bin/riscv64-unknown-elf-ar qc libggml.a CMakeFiles/ggml.dir/ggml.c.obj "CMakeFiles/ggml.dir/ggml-alloc.c.obj" "CMakeFiles/ggml.dir/ggml-backend.c.obj" "CMakeFiles/ggml.dir/ggml-quants.c.obj"
+/home/yoav/riscv-medany/bin/riscv64-unknown-elf-ranlib libggml.a
